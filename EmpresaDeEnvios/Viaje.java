@@ -19,5 +19,14 @@ public class Viaje {
 	public void setDestino(String destino) {
 		this.destino = destino;
 	}
+
+	// Metodos auxiliares
+	public boolean mismoDestino(String destino){
+		return this.destino.equals(destino);
+	}
+	@Override
+	public boolean equals(Object o){
+		return false;
+	}
 	
 }

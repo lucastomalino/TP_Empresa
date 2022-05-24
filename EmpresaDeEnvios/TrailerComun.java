@@ -1,9 +1,14 @@
 package EmpresaDeEnvios;
 
 public class TrailerComun extends Camion {
-	public TrailerComun(int id_, int cargaMaxima_, int capacidadMaxima_, boolean refrigerado_, double costoPorKm_) {
-		super(id_, cargaMaxima_, capacidadMaxima_, refrigerado_, costoPorKm_);
+	public TrailerComun(String id_, double cargaMax, double capacidad, boolean refrigerado_, double costoPorKm_) {
+		super(id_, cargaMax, capacidad, refrigerado_, costoPorKm_);
+	}
+
+	@Override
+	public double calcularCosto() {
+		return getCostoPorKM()*getkmArecorrer();
 	}
 	
-	//.... 
+	
 }

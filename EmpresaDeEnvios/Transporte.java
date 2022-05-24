@@ -3,24 +3,25 @@ package EmpresaDeEnvios;
 import java.util.LinkedList;
 
 public abstract class Transporte {
-	private int id;	// Codigo de identificacion del camion
-	private int cargaMaxima; // Representa el peso maxima que puede cargar
-	private int capacidadMaxima; // Representa el espacio maximo disponible
+	private String id;	// Codigo de identificacion del camion
+	private double cargaMaxima; // Representa el peso maxima que puede cargar
+	private double capacidadMaxima; // Representa el espacio maximo disponible
 	private boolean refrigerado;
 	private double costoPorKm;
-	private boolean seguroDeCarga; // Agregado por tema de enunciado
+	private double seguroDeCarga; // Agregado por tema de enunciado
 	private boolean enViaje; // Representa si el transporte esta en viaje o no
 	private LinkedList<Paquete> paquetes; // Representa los paquetes que hay en el transporte
 	private String destino; // Representa el destino asignado al transporte
+	private double distancia;
 
-	public Transporte(int id_, int cargaMaxima_, int capacidadMaxima_
+	public Transporte(String id_, double cargaMaxima_, double capacidadMaxima_
 					, boolean refrigerado_, double costoPorKm_) {
 		id = id_;
 		cargaMaxima = cargaMaxima_;
 		capacidadMaxima = capacidadMaxima_;
 		refrigerado = refrigerado_;
 		costoPorKm = costoPorKm_;
-		seguroDeCarga = true; // En principio tienen
+		seguroDeCarga = 0; // En principio tienen
 		LinkedList<Paquete> paquetes = new LinkedList<Paquete>(); // En principio esto a a estar vacio
 		setEnViaje(false);   // En principio estan parados		
 		setDestino("");
@@ -40,31 +41,31 @@ public abstract class Transporte {
 	public void setRefrigerado(boolean refrigerado) {
 		this.refrigerado = refrigerado;
 	}
-	public int getCapacidadMaxima() {
+	public double getCapacidadMaxima() {
 		return capacidadMaxima;
 	}
-	public void setCapacidadMaxima(int capacidadMaxima) {
+	public void setCapacidadMaxima(double capacidadMaxima) {
 		this.capacidadMaxima = capacidadMaxima;
 	}
-	public int getCargaMaxima() {
+	public double getCargaMaxima() {
 		return cargaMaxima;
 	}
-	public void setCargaMaxima(int cargaMaxima) {
+	public void setCargaMaxima(double cargaMaxima) {
 		this.cargaMaxima = cargaMaxima;
 	}
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public boolean isSeguroDeCarga() {
+	public double isSeguroDeCarga() {
 		return seguroDeCarga;
 	}
 
-	public void setSeguroDeCarga(boolean seguroDeCarga) {
-		this.seguroDeCarga = seguroDeCarga;
+	public void setSeguroDeCarga(double segCarga) {
+		this.seguroDeCarga = segCarga;
 	}
 
 	public LinkedList<Paquete> getPaquetes() {
@@ -75,7 +76,7 @@ public abstract class Transporte {
 		this.paquetes = paquetes;
 	}
 
-	public boolean isEnViaje() {
+	public boolean estaEnViaje() {
 		return enViaje;
 	}
 
@@ -96,6 +97,11 @@ public abstract class Transporte {
 	/* ------ Metodos ------ */
 	public void agregarPaquete(Paquete paquete){} 
 	public void vaciarCarga(){}
-
-	
+	abstract public double calcularCosto();
+	public void setkmArecorrer(double distancia) {
+		this.distancia = distancia;
+	}
+	public double getkmArecorrer(){
+		return this.distancia;
+	}
 }

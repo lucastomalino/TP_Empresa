@@ -42,7 +42,15 @@ public class Deposito {
 	/* ----------------------------------------------*/
 	
 	/* ------- Metodos ------- */
-	public void agregarPaquete(Paquete paquete){}
+	public boolean agregarPaquete(Paquete paquete){
+		boolean necesitaFrio = paquete.getNecesitaFrio() == getesRefrigerado();
+		boolean hayEspacio = getCapacidadMaxima() - paquete.getVolumen() >= 0;
+		if(necesitaFrio && hayEspacio){
+			paquetes.add(paquete);
+			return true;
+		}
+		return false;
+	}
 	public Paquete quitarPaquete(Paquete paquete){return new Paquete();}
 
 }

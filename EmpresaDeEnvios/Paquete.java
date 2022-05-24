@@ -1,11 +1,11 @@
 package EmpresaDeEnvios;
 
 public class Paquete {
-	private int peso;
-	private int volumen;
+	private double peso;
+	private double volumen;
 	private String destino;
 	private boolean necesitaFrio;
-	public Paquete(int peso_, int volumen_, String destino_, boolean necesitaFrio_) {
+	public Paquete(String destino_, double peso_, double volumen_, boolean necesitaFrio_) {
 		setPeso(peso_);
 		setVolumen(volumen_);
 		setDestino(destino_);
@@ -14,17 +14,17 @@ public class Paquete {
 	public Paquete() {}
 	
 	/* ---------- Getters and Setters ---------- */
-	public int getPeso() {
+	public double getPeso() {
 		return peso;
 	}
-	public void setPeso(int peso) {
-		this.peso = peso;
+	public void setPeso(double peso_) {
+		this.peso = peso_;
 	}
-	public int getVolumen() {
+	public double getVolumen() {
 		return volumen;
 	}
-	public void setVolumen(int volumen) {
-		this.volumen = volumen;
+	public void setVolumen(double volumen_) {
+		this.volumen = volumen_;
 	}
 	public String getDestino() {
 		return destino;
@@ -32,7 +32,7 @@ public class Paquete {
 	public void setDestino(String destino) {
 		this.destino = destino;
 	}
-	public boolean isNecesitaFrio() {
+	public boolean getNecesitaFrio() {
 		return necesitaFrio;
 	}
 	public void setNecesitaFrio(boolean necesitaFrio) {

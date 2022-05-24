@@ -8,15 +8,20 @@ public class Empresa {
 	private String CUIT;
 	private String NOMBRE;
 	private int capacidadDeposito;
+
+	// Objetos que maneja la empresa:
+	private LinkedList<Viaje> destinos; // Un viaje puede ser igual a otro pero se le asigna otro transporte
+	private LinkedList<Deposito> depositos;
+	private HashSet<Transporte> transportes;
 	
 	public Empresa(String cuit, String nombre, int capacidad) {
 		CUIT = cuit;
 		NOMBRE = nombre;
-		capacidadDeposito = capacidad; // La capacidad no puede ser negativa
+		capacidadDeposito = capacidad; // La capacidad no puede ser negativa. cant de Paquetes
 		
 		// Agregar depositos.
-		Deposito d1 = new Deposito(true, capacidad);
-		Deposito d2 = new Deposito(false, capacidad);
+		Deposito d1 = new Deposito(true, capacidad); // Deposito frio
+		Deposito d2 = new Deposito(false, capacidad); // Deposito no frio
 		depositos.add(d1);
 		depositos.add(d2);
 		
@@ -42,11 +47,11 @@ public class Empresa {
 		this.capacidadDeposito = capacidadDeposito;
 	}
 	public LinkedList<Viaje> getViajes() {
-		return viajes;
+		return destinos;
 	}
 
 	public void setViajes(LinkedList<Viaje> viajes) {
-		this.viajes = viajes;
+		destinos = viajes;
 	}
 
 	public HashSet<Transporte> getTransportes() {
@@ -58,26 +63,118 @@ public class Empresa {
 	}
 	
 	/*---------------------------------------*/
+
+	// Metodos de Test
+	public void agregarDestino(String destino, int km) {
+		destinos.add(new Viaje(destino,km)); 	// Agrega un viaje a la linkedlist destinos
+	}
+
+	public void agregarTrailer(String matricula, double cargaMax,
+	double capacidad, boolean tieneRefrigeracion,
+	double costoKm, double segCarga) {
+		Transporte tc = new TrailerComun(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm);
+		tc.setSeguroDeCarga(segCarga); // Consultar
+		transportes.add(tc); // Agrega el trailer al hashSet de transportes
+	}
+
+	public void agregarMegaTrailer(String matricula, double cargaMax,
+	double capacidad, boolean tieneRefrigeracion,
+	double costoKm, double segCarga, double costoFijo,
+	double costoComida) {
+		Transporte mt = new MegaTrailer(matricula, cargaMax, capacidad, tieneRefrigeracion, costoKm,costoFijo,costoComida);
+		mt.setSeguroDeCarga(segCarga);
+		transportes.add(mt); // Agrega el trailer al hashSet de transportes
+	}
+
+	public void agregarFlete(String matricula, double cargaMax, double capacidad,
+	double costoKm, int cantAcompaniantes,
+	double costoPorAcompaniante) {
+		Transporte f = new Flete(matricula, cargaMax, capacidad, costoKm, cantAcompaniantes, costoPorAcompaniante);
+		transportes.add(f);
+	}
+
+	public void asignarDestino(String matricula, String destino) {
+		Viaje vAux = new Viaje("1",-10);
+		for(Viaje v: destinos){
+			if(v.getDestino().equals(destino)){
+				vAux = v;
+				break;
+			}
+		}
+		if(!vAux.getDestino().equals(destino)){
+			throw new RuntimeException("El destino no fue agregado");
+		}else{
+			for(Transporte t: transportes){
+				if(t.getId().equals(matricula) && t.getDestino() == null){
+					t.setDestino(destino);
+					t.setkmArecorrer(vAux.getDistancia());
+					return;
+				}
+			}
+		}
+		throw new RuntimeException("No se encontro transporte disponible");
+	}
+
+	public boolean incorporarPaquete(String destino, double peso, double volumen,
+ 	boolean necesitaRefrigeracion){
+		Paquete p = new Paquete(destino, peso, volumen, necesitaRefrigeracion);
+		return depositos.get(0).agregarPaquete(p) || 
+			   depositos.get(1).agregarPaquete(p); 
+			   /* Si necesita frio se agrega al deposito[0] sino al deposito[1],
+			    va a retornar en false únicamente si no hay espacio en el deposito determinado. */
+ }
+	public double cargarTransporte(String matricula) {
+		
+		return 0;
+	}
+
+	public void iniciarViaje(String matricula) {
+		for(Transporte t: transportes){
+			boolean tieneMercaderia = t.getCargaMaxima() > 0;
+			boolean noEstaEnViaje = !t.estaEnViaje();
+			boolean mismaMatricula = t.getId().equals(matricula);
+			if(mismaMatricula){
+				if(tieneMercaderia && noEstaEnViaje){
+					t.setEnViaje(true);
+				}else{ 
+					throw new RuntimeException("No se puede iniciar el viaje");       
+				}
+			}	
+	}}
+
+	public void finalizarViaje(String matricula) {
+		for (Transporte t : transportes) {
+			boolean noEstaEnViaje = !t.estaEnViaje();	
+			boolean mismaMatricula = t.getId().equals(matricula);
+			if (mismaMatricula){
+				if(noEstaEnViaje){
+					throw new RuntimeException("El transporte se encuentra en viaje");
+				}else{
+					t.setEnViaje(false); t.setDestino(null); t.setCargaMaxima(0);
+				}
+			}
+		}
+	}
+
+	public double obtenerCostoViaje(String matricula) {
+		for (Transporte t : transportes) {
+			boolean noEstaEnViaje = !t.estaEnViaje();	
+			boolean mismaMatricula = t.getId().equals(matricula);
+			if(mismaMatricula){
+				if(noEstaEnViaje){
+					throw new RuntimeException("No esta en viaje");
+				} else{
+					return t.calcularCosto();
+				}
+			} 
+		}
+		return 0;	
+	}
+	public String obtenerTransporteIgual(String matricula){
+		return "";
+	}
 	
-	// Objetos que maneja la empresa:
-	private LinkedList<Viaje> viajes; // Un viaje puede ser igual a otro pero se le asigna otro transporte
-	private HashSet<Deposito> depositos;
-	private HashSet<Transporte> transportes;
-	
-	// Metodos de la Empresa
-	// boolean incorporarUnPaqueteAunDeposito(Paquete paquete) {		
-	// 	return true;
-	// }
-	
-	// void agregarTransporte(Transporte transporte) {}
-	
-	// void asinarDestinoAtransporte(String id, String destino, String cantKm) {}
-	
-	// int cargarTransporteConMercaderia(String id) {return 0;}
-	
-	// void iniciarViaje(String id) {}
-	
-	// void finalizarViaje(String id) {}
+	/*---------------------------------------*/
 
 	public static void main(String[] args) {
 		double volumen;
@@ -109,46 +206,14 @@ public class Empresa {
 		+" metros cubicos en el transp AA333XQ");
 		e.iniciarViaje("AA333XQ");
 		System.out.println("Costo del viaje:"
-		+e.obtenerCostoViaje("AA333XQ"));
+		+ e.obtenerCostoViaje("AA333XQ"));
 		System.out.println(e.toString());
 		e.finalizarViaje("AA333XQ");
 		System.out.println(e.toString());		
 	}
 
-	private String obtenerTransporteIgual(String matricula){
-		return "";
-	}
-	private void finalizarViaje(String string) {
-	}
 
-	private void iniciarViaje(String string) {
-	}
 
-	private String obtenerCostoViaje(String string) {
-		return null;
-	}
-
-	private double cargarTransporte(String string) {
-		return 0;
-	}
-
-	private void incorporarPaquete(String string, int i, int j, boolean b) {
-	}
-
-	private void asignarDestino(String string, String string2) {
-	}
-
-	private void agregarFlete(String string, int i, int j, int k, int l, int m) {
-	}
-
-	private void agregarMegaTrailer(String string, int i, int j, boolean b, int k, int l, int m, int n) {
-	}
-
-	private void agregarTrailer(String string, int i, int j, boolean b, int k, int l) {
-	}
-
-	private void agregarDestino(String string, int i) {
-	}
 	
 }
 

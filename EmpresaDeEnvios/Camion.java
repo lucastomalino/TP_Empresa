@@ -3,7 +3,7 @@ package EmpresaDeEnvios;
 public abstract class Camion extends Transporte {
 //	private boolean seguroDeCarga;	
 	private boolean viajesMayorA500;
-	public Camion(int id_, int cargaMaxima_, int capacidadMaxima_, boolean refrigerado_, double costoPorKm_) {
+	public Camion(String id_, double cargaMaxima_, double capacidadMaxima_, boolean refrigerado_, double costoPorKm_) {
 		super(id_, cargaMaxima_, capacidadMaxima_, refrigerado_, costoPorKm_);
 		viajesMayorA500 = false;
 	}
