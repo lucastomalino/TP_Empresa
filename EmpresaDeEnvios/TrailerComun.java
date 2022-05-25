@@ -7,8 +7,7 @@ public class TrailerComun extends Camion {
 
 	@Override
 	public double calcularCosto() {
-		return getCostoPorKM()*getkmArecorrer();
+		return getCostoPorKM() * getkmArecorrer() + getSeguroDeCarga();
 	}
-	
-	
+
 }

@@ -1,9 +1,9 @@
 package EmpresaDeEnvios;
 
-public class MegaTrailer extends Camion{
+public class MegaTrailer extends Camion {
 	private double costoFijo;
 	private double costoComida;
-	
+
 	public MegaTrailer(String id_, double cargaMaxima_, double capacidadMaxima_, boolean refrigerado_,
 			double costoPorKm_, double costoFijo_, double costoComida_) {
 		super(id_, cargaMaxima_, capacidadMaxima_, refrigerado_, costoPorKm_);
@@ -14,16 +14,15 @@ public class MegaTrailer extends Camion{
 
 	@Override
 	public double calcularCosto() {
-		return getkmArecorrer()*getCostoPorKM()	+ costoComida;
+		return getkmArecorrer() * getCostoPorKM() + costoComida + costoFijo + getSeguroDeCarga();
 	}
-		
 
 	// public double getCostoFijo() {
-	// 	return costoFijo;
+	// return costoFijo;
 	// }
 
 	// public void setCostoFijo(double costoFijo) {
-	// 	this.costoFijo = costoFijo;
+	// this.costoFijo = costoFijo;
 	// }
 
 }

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class EmpresaTest {
-    Empresa emp;
+	Empresa emp;
 	double volumen, ctoViaje;
 
 	@Before
@@ -16,7 +16,7 @@ public class EmpresaTest {
 		emp = new Empresa("30112223334", "Expreso Libre", 30000);
 		emp.agregarDestino("Cordoba", 350);
 	}
-	
+
 	@Test
 	public void testIncorporarPaqueteSinLugar() {
 		assertFalse(emp.incorporarPaquete("Cordoba", 300, 30001, true));
@@ -31,18 +31,18 @@ public class EmpresaTest {
 	public void testAgregarDestinoDuplicado() {
 		emp.agregarDestino("Cordoba", 320);
 	}
-	
+
 	@Test(expected = RuntimeException.class)
 	public void testIniciarViajeDeTransporteNoRegistrado() {
 		emp.iniciarViaje("AC314PI");
 	}
-	
+
 	@Test(expected = RuntimeException.class)
 	public void testIniciarViajeSinCarga() {
 		emp.agregarTrailer("AC314PI", 12000, 60, true, 5, 100);
 		emp.iniciarViaje("AC314PI");
 	}
-	
+
 	@Test(expected = RuntimeException.class)
 	public void testFinalizarViajeNoIniciado() {
 		emp.agregarTrailer("AC314PI", 12000, 60, true, 5, 100);
@@ -72,11 +72,11 @@ public class EmpresaTest {
 
 	@Test
 	public void testMegaTrailer() {
-		
+
 		emp.agregarDestino("Corrientes", 900);
 		// distancia a Corrientes = 900Km
-		// costo viaje = 900 * 10 + 150 + 500 + 300 = 
-		//             = 9000 + 950 = $ 9950
+		// costo viaje = 900 * 10 + 150 + 500 + 300 =
+		// = 9000 + 950 = $ 9950
 		emp.agregarMegaTrailer("AD161AU", 18000, 120, false, 10, 150, 500, 300);
 		emp.asignarDestino("AD161AU", "Corrientes");
 		emp.incorporarPaquete("Corrientes", 100, 5, true); // no es compatible con el transprote
@@ -92,14 +92,14 @@ public class EmpresaTest {
 		ctoViaje = emp.obtenerCostoViaje("AD161AU");
 		assertEquals(9950.0, ctoViaje, 0.5);
 		emp.finalizarViaje("AD161AU");
-		
+
 	}
 
 	@Test
 	public void testTransIguales() {
-		
+
 		emp.agregarDestino("Parana", 30);
-		
+
 		emp.agregarFlete("AB271NE", 8000, 40, 3, 2, 200);
 		emp.asignarDestino("AB271NE", "Parana");
 		emp.incorporarPaquete("Parana", 100, 5, false);
