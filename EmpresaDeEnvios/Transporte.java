@@ -11,7 +11,7 @@ public abstract class Transporte {
 	private boolean refrigerado;
 	private double costoPorKm;
 	private boolean enViaje; // Representa si el transporte esta en viaje o no
-	private LinkedList<Paquete> paquetes; // Representa los paquetes que hay en el transporte
+	private LinkedList<Paquete> paquetes = new LinkedList<Paquete>(); // Representa los paquetes que hay en el transporte
 	private String destino; // Representa el destino asignado al transporte
 	private double distancia;
 
@@ -22,7 +22,6 @@ public abstract class Transporte {
 		capacidadMaxima = capacidadMaxima_;
 		refrigerado = refrigerado_;
 		costoPorKm = costoPorKm_;
-		LinkedList<Paquete> paquetes = new LinkedList<Paquete>(); // En principio esto a a estar vacio
 		setEnViaje(false); // En principio estan parados
 		setDestino(null);
 	}

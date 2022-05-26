@@ -170,9 +170,7 @@ public class Empresa {
 		if (transporte != null) {
 			for (Paquete p : depositos.get(tieneFrio).getPaquetes()) {
 				if (p.getDestino().equals(destinoTransporte)) {
-					System.out.println("Transporte no es nulo");
 					boolean entro = transporte.agregarPaquete(p);
-					System.out.println(entro);
 					if (entro) {
 						volumenCargado += p.getVolumen();
 						// depositos.get(tieneFrio).getPaquetes().remove(p);
@@ -197,11 +195,13 @@ public class Empresa {
 			if (mismaMatricula) {
 				if (tieneMercaderia && noEstaEnViaje) {
 					t.setEnViaje(true);
+					return;
 				} else {
 					throw new RuntimeException("No se puede iniciar el viaje");
 				}
 			}
 		}
+		
 		throw new RuntimeException("No esta el transporte");
 	}
 
