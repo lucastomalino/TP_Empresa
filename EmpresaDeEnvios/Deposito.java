@@ -62,4 +62,16 @@ public class Deposito {
 		return new Paquete();
 	}
 
+	@Override
+	public String toString(){
+	String frio = this.getesRefrigerado() ? "refrigerado" : "no refrigerado";
+	
+	String mostrar = "Deposito " + frio + "\n";
+	String paquetes = "";
+	for(Paquete p: this.paquetes){
+		paquetes = paquetes + "\n" + p.toString();
+	}
+	mostrar += paquetes;
+	return mostrar;
+}
 }

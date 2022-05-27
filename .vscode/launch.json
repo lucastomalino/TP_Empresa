@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch Empresa",
+            "request": "launch",
+            "mainClass": "EmpresaDeEnvios.Empresa",
+            "projectName": "TP_Objeto_8542e0bf"
+        },
+        {
             "name": "Java",
             "type": "java",
             "request": "launch",

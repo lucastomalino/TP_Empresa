@@ -140,4 +140,67 @@ public abstract class Transporte {
 	public double getkmArecorrer() {
 		return this.distancia;
 	}
+	
+	@Override
+	public String toString(){
+	String id = this.id;
+	String transporte = "";
+	if(this instanceof MegaTrailer){
+		transporte = "MegaTrailer";
+	}
+	if(this instanceof TrailerComun){
+		transporte = "TrailerComun";
+	}
+	if(this instanceof Flete){
+		transporte = "Flete";
+	}
+	
+	double cargaMaxima = this.cargaMaxima;
+	double capacidadMaxima = this.capacidadMaxima;
+	double cargaActual = this.cargaActual;
+	double capacidadActual = this.capacidadActual;
+	boolean enViaje = this.enViaje;
+	double costoPorKm = this.costoPorKm;
+	String destino = this.destino;
+	double distancia = this.distancia;
+	String frio = this.isRefrigerado() ? "Sí" : "No";
+	
+	String mostrar =  transporte + "\nID: " + id + ", Destino: " + destino + ", Distancia: " + distancia	+ ", Tiene frío: " + frio + "\n"
+									+ "Capacidad máxima: " + capacidadMaxima + ", Capacidad actual: " + capacidadActual + "\n" 
+									+ "Carga maxima: " + cargaMaxima + ", Carga actual: " + cargaActual + "\n"
+									+ "En viaje: " + enViaje + ", Costo por KM: " + costoPorKm + ".\n";
+	String paquetes = "";
+	for(Paquete p: this.paquetes){
+		paquetes = paquetes + "\n\t" + p.toString();
+		}
+	mostrar += paquetes;
+	return mostrar;
+	}
+
+@Override
+public boolean equals(Object o){
+	if(o == null){
+		return false;
+	}
+	Transporte other = null;
+	if(this instanceof TrailerComun && o instanceof TrailerComun){
+		other = (Transporte) o;
+		return this.destino.equals(other.getDestino()) && this.cargaActual == other.getCargaActual();
+	}
+	if(this instanceof MegaTrailer && o instanceof MegaTrailer){
+		other = (Transporte) o;
+		return this.destino.equals(other.getDestino()) && this.cargaActual == other.getCargaActual();
+
+	}
+	if(this instanceof Flete && o instanceof Flete){
+		other = (Transporte) o;
+		return this.destino.equals(other.getDestino()) && this.cargaActual == other.getCargaActual();
+	}
+	return false;
+}
+
+
+
+
+
 }

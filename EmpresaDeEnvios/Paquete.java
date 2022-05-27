@@ -39,6 +39,16 @@ public class Paquete {
 		this.necesitaFrio = necesitaFrio;
 	}
 	/* -------------------------------------------- */
-	
+
+	@Override
+	public String toString(){
+		double peso = this.getPeso();
+		String destino = this.destino;
+		double volumen = this.volumen;
+		boolean tieneFrio = this.getNecesitaFrio();
+
+		return "(Destino: " + destino + ", Peso: " + peso + " kg" + ", Volumen: " + volumen + " m³" + ", Necesita Frío: " + tieneFrio + ".)";
+	}
+		
 	
 }

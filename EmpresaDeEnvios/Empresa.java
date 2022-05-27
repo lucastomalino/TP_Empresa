@@ -25,10 +25,6 @@ public class Empresa {
 		depositos.add(d1);
 		depositos.add(d2);
 
-		// destinos = new LinkedList<Viaje>();
-		// depositos = new LinkedList<Deposito>();
-		// transportes = new HashSet<Transporte>();
-
 	}
 
 	/* -------- Getters and Setters ----------- */
@@ -173,7 +169,6 @@ public class Empresa {
 					boolean entro = transporte.agregarPaquete(p);
 					if (entro) {
 						volumenCargado += p.getVolumen();
-						// depositos.get(tieneFrio).getPaquetes().remove(p);
 						paquetesAmeter.add(p);
 					}
 
@@ -238,7 +233,52 @@ public class Empresa {
 	}
 
 	public String obtenerTransporteIgual(String matricula) {
-		return "";
+		/*
+			Mismo tipo - Misma Carga - Mismo destino
+		*/
+		Transporte transporte = null;
+		Transporte mismoTransporte = null;
+
+		for(Transporte t: transportes){
+			if(t.getId().equals(matricula)){
+				transporte = t;
+			}
+		}
+		if(transporte != null){
+			for(Transporte t2: transportes){
+				if(transporte.equals(t2)){
+					mismoTransporte = t2;
+					return mismoTransporte.getId();
+				}
+			}
+		}	
+		return null;
+	}
+	
+	// Metodo toString
+	@Override 
+	public String toString(){
+		return mostrarDepositosYtransportes();
+	}
+
+	private String mostrarDepositosYtransportes(){
+		String mostrar = "";
+
+		mostrar = this.getNOMBRE() + "\n"
+			+ "Cantidad de depositos: " + depositos.size()  + " | Capacidad: " + this.getCapacidadDeposito() + "\n"
+			+ "Cantidad de transportes: " + transportes.size() + "\n\n"; 
+		mostrar += "------------------Depositos------------------\n";
+			
+		for(Deposito d: depositos){
+			mostrar += d.toString() + "\n\n";
+		}
+		
+		mostrar += "----------------Transportes-------------------\n";
+		for(Transporte t: transportes){
+			mostrar += t.toString() + "\n\n";
+		}
+		
+		return mostrar;
 	}
 
 	/*---------------------------------------*/
@@ -270,14 +310,15 @@ public class Empresa {
 		e.incorporarPaquete("Rosario", 80, 2, false);
 		e.incorporarPaquete("Rosario", 250, 2, false);
 		volumen = e.cargarTransporte("AA333XQ");
-		System.out.println("Se cargaron " + volumen
-				+ " metros cubicos en el transp AA333XQ");
+		System.out.println("Se cargaron " + volumen	+ " metros cubicos en el transp AA333XQ");
 		e.iniciarViaje("AA333XQ");
-		System.out.println("Costo del viaje:"
-				+ e.obtenerCostoViaje("AA333XQ"));
+		System.out.println("Costo del viaje:" + e.obtenerCostoViaje("AA333XQ"));
 		System.out.println(e.toString());
 		e.finalizarViaje("AA333XQ");
 		System.out.println(e.toString());
+
+
 	}
 
+		
 }

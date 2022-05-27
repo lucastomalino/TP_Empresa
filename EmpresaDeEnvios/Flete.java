@@ -7,7 +7,6 @@ public class Flete extends Transporte {
 	public Flete(String id_, double cargaMaxima_, double capacidadMaxima_, double costoPorKm_,
 			int cantAcompaniantes_, double costoPorAcompaniante_) {
 		super(id_, cargaMaxima_, capacidadMaxima_, false, costoPorKm_);
-		// super.setSeguroDeCarga(false);
 		setCantAcompaniantes(cantAcompaniantes_);
 		setCostoPorAcompaniante(costoPorAcompaniante_);
 
