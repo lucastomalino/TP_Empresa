@@ -58,9 +58,6 @@ public class Deposito {
 		return false;
 	}
 
-	public Paquete quitarPaquete(Paquete paquete) {
-		return new Paquete();
-	}
 
 	@Override
 	public String toString(){

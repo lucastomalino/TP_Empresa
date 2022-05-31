@@ -262,23 +262,23 @@ public class Empresa {
 	}
 
 	private String mostrarDepositosYtransportes(){
-		String mostrar = "";
+		StringBuilder mostrar = new StringBuilder("");
 
-		mostrar = this.getNOMBRE() + "\n"
-			+ "Cantidad de depositos: " + depositos.size()  + " | Capacidad: " + this.getCapacidadDeposito() + "\n"
-			+ "Cantidad de transportes: " + transportes.size() + "\n\n"; 
-		mostrar += "------------------Depositos------------------\n";
+		mostrar.append(this.getNOMBRE() + "\n" 
+		+ "Cantidad de depositos: " + depositos.size()  + " | Capacidad: " + this.getCapacidadDeposito() + "\n" 
+		+ "Cantidad de transportes: " + transportes.size() + "\n\n" 
+		+ "------------------Depositos------------------\n");
 			
 		for(Deposito d: depositos){
-			mostrar += d.toString() + "\n\n";
+			mostrar.append(d.toString() + "\n\n") ;
 		}
 		
-		mostrar += "----------------Transportes-------------------\n";
+		mostrar.append( "----------------Transportes-------------------\n");
 		for(Transporte t: transportes){
-			mostrar += t.toString() + "\n\n";
+			mostrar.append(t.toString() + "\n\n");
 		}
 		
-		return mostrar;
+		return mostrar.toString();
 	}
 
 	/*---------------------------------------*/
